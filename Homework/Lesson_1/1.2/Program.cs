@@ -13,7 +13,3 @@ else
 {Console.WriteLine(b);
     
 }
-
-
-
-
