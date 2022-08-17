@@ -1,5 +1,5 @@
-﻿// // 1. Задайте двумерный массив. Напишите программу,
-//    которая поменяет местами первую и последнюю строку массива.
+﻿//Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
+
 void Print(int[,] arr)
 {
     int row_size = arr.GetLength(0);
@@ -8,40 +8,56 @@ void Print(int[,] arr)
     for (int i = 0; i < row_size; i++)
     {
         for (int j = 0; j < column_size; j++)
-            Console.Write($" {arr[i, j]} ");
+        {
+            Console.Write($" {arr[i, j],1} ");
+        }
         Console.WriteLine();
     }
     Console.WriteLine();
 }
-
 int[,] MassNums(int row, int column, int from, int to)
 {
     int[,] arr = new int[row, column];
-
     for (int i = 0; i < row; i++)
+    {
         for (int j = 0; j < column; j++)
+        {
             arr[i, j] = new Random().Next(from, to);
+        }
+    }
     return arr;
 }
-
-void FirstWithLast(int[,] arr)
+int[,] Sort(int[,] arr)
 {
-    int row = arr.GetLength(0);
-    int column = arr.GetLength(1);
+    for (int i = 0; i < arr.GetLength(0); i++)
+    {
+        for (int j = 0; j < arr.GetLength(1); j++)
+        {
+            int posMin = 0;
+            for (int f = 0; f < arr.GetLength(1) - j; f++)
+            {
+                if (arr[i, f] < arr[i, posMin])
+                    posMin = f;
+            }
 
-    for (int i = 0; i < column; i++)
-    {        
-        (arr[0, i], arr[row - 1, i]) = (arr[row - 1, i], arr[0, i]);        
+            (arr[i, posMin], arr[i, arr.GetLength(1) - 1 - j]) = (arr[i, arr.GetLength(1) - 1 - j], arr[i, posMin]);
+        }
     }
+    return arr;
 }
-
-Console.Write("Enter the number of rows: ");
+Console.Write("Введите количество строк: ");
 int row = int.Parse(Console.ReadLine());
-Console.Write("Enter the number of columns: ");
+Console.Write("Введите количество столбцов: ");
 int column = int.Parse(Console.ReadLine());
-
-int[,] arr_1 = MassNums(row, column, 1, 10);
+int[,] arr_1 = MassNums(row, column, 1, 11);
 Print(arr_1);
+Sort(arr_1);
+Console.WriteLine();
+int[,] arr2 = Sort(arr_1);
+Print(arr2);
 
-FirstWithLast(arr_1);
-Print(arr_1);
+
+
+
+
+
